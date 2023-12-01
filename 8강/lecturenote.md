@@ -25,14 +25,17 @@
 - TCP의 `첫 버전` TCP Tahoe의 동작.
     - 일단 들어와서 slow start를 하고 늘려간다.
     - threshold값 부터는 하나씩만 증가하게 한다.
-    - 패킷이 유실되면? network congestion이라 판단하고 `slow start`부터 다시 시작. 그리고, 아까 `최대값 / 2`를 하여 새로운 threshold를 정의한다.
+    - 패킷이 유실되면? network congestion이라 판단하고 `slow start`부터 다시 시작. 그리고, `아까의 congestion window size의 최대값 / 2`를 하여 새로운 threshold를 정의한다.
 - `두번째 버전`인 Reno
-    - 위에 다른 것은 똑같고, 만약 유실이 되면?
-    - `Timer`나 `3 duplicated ACK`를 이용하여 유실을 탐지했다.
-        - `3 duplicated ACK`를 이용한다는 것은 다 잘가지만 이것만 문제가 발생한 상황이다.
-        - `Time out`은 그 패킷 뿐만 아니라 다른 패킷도 다 안간 상황이다.
-        - 둘의 대응이 같아서는 안될 것이다.
-    - 만약 `Time out`이 탐지되면? window size와 threshold는 둘 다 `절반으로 줄인다`.
+    - 다른건 다 똑같으나, network congestion 판단 시 threshold부터 다시 시작.
+
+
+### 유실에 대한 구분법
+- `Timer`나 `3 duplicated ACK`를 이용하여 유실을 탐지했다.
+    - `3 duplicated ACK`를 이용한다는 것은 다 잘가지만 이것만 문제가 발생한 상황이다.
+    - `Time out`은 그 패킷 뿐만 아니라 다른 패킷도 다 안간 상황이다.
+    - 둘의 대응이 같아서는 안될 것이다.
+- 만약 `Time out`이 탐지되면? 위의 congestion control 가동.
 
 ### 질문
 - 처음에 Threshold 설정은? 구현하기 나름.
